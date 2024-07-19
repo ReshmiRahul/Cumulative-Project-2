@@ -10,8 +10,8 @@
     </form>
     @foreach (var teacher in Model)
     {
-        <div class="listitem row">
-            <div class="col-md-12"><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFName @teacher.TeacherLName</a></div>
+        <div>
+            <div><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFName @teacher.TeacherLName</a></div>
         </div>
     }
 </div>
