@@ -1,7 +1,61 @@
-﻿@model Cumulative_Project1.Models.Teacher
-@{
-    ViewBag.Title = "DeleteConfirm";
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        
+        #containershow {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+            #containershow nav {
+                margin-bottom: 20px;
+            }
+
+        .navlink {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .navlink:hover {
+                text-decoration: underline;
+            }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .delbutton {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #dc3545;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .delbutton:hover {
+                background-color: #c82333;
+            }
+    </style>
+</head>
+<body>
+    @model Cumulative_Project1.Models.Teacher
+    @{
+        ViewBag.Title = "DeleteConfirm";
+    }
 
     <div id="containershow">
         <nav>
@@ -15,3 +69,5 @@
             </button>
         </form>
     </div>
+</body>
+</html>
