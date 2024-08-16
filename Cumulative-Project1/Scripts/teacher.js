@@ -48,3 +48,44 @@ function AddTeacher() {
 	rq.send(JSON.stringify(TeacherData));
 
 }
+
+function EditTeacher(TeacherId) {
+	//goal: send a request which looks like this:
+	//POST : http://localhost:59727/api/TeacherData/EditTeacher/{id}
+	//with POST data of teacherfname, teacherlname, employeenumber, salary and hiredate
+
+	var URL = "http://localhost:59727/api/TeacherData/EditTeacher/" + TeacherId;
+
+	var rq = new XMLHttpRequest();
+	// where is this request sent to?
+	// is the method GET or POST?
+	// what should we do with the response?
+
+	var TeacherFName = document.getElementById('TeacherFName').value;
+	var TeacherLName = document.getElementById('TeacherLName').value;
+	var EmployeeNumber = document.getElementById('EmployeeNumber').value;
+	var Salary = document.getElementById('Salary').value;
+	var HireDate = document.getElementById('HireDate').value;
+
+	var TeacherData = {
+		"TeacherFName": TeacherFName,
+		"TeacherLName": TeacherLName,
+		"EmployeeNumber": EmployeeNumber,
+		"Salary": Salary,
+		"HireDate": HireDate
+	};
+
+	rq.open("POST", URL, true);
+	rq.setRequestHeader("Content-Type", "application/json");
+	rq.onreadystatechange = function () {
+		//ready state should be 4 AND status should be 200
+		if (rq.readyState == 4 && rq.status == 200) {
+			//request is successful and the request is finished
+			//nothing to render, the method returns nothing.
+		}
+	}
+	//POST information sent through the .send() method
+	rq.send(JSON.stringify(TeacherData));
+
+}
+

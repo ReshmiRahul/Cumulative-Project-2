@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Google.Protobuf.WellKnownTypes;
+
+//Install via Tools > NuGet package manager > manage nuget packages for solution
+//"Browse" tab
+//search for mysql.data and install to project
 using MySql.Data.MySqlClient;
 
 namespace Cumulative_Project1.Models

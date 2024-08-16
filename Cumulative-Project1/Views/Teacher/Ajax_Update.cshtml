@@ -1,0 +1,144 @@
+﻿@model Cumulative_Project1.Models.Teacher
+@{
+    ViewBag.Title = "Ajax_Update";
+}
+
+<h2>Ajax_Update</h2>
+
+<div class="navlink">
+    <a href="/Teacher/Show/@Model.TeacherId">Back</a>
+</div>
+<div class="main-content">
+    <h2>Update @Model.TeacherFName @Model.TeacherLName</h2>
+    <div>
+        <label>Teacher's First Name</label>
+        <input type="text" name="TeacherFName" id="TeacherFName" class="newinput" value="@Model.TeacherFName" />
+    </div>
+
+    <div>
+        <label>Teacher's Last Name</label>
+        <input type="text" name="TeacherLName" id="TeacherLName" class="newinput" value="@Model.TeacherLName" />
+    </div>
+
+    <div>
+        <label>Employee Number</label>
+        <input type="text" name="EmployeeNumber" id="EmployeeNumber" class="newinput" value="@Model.EmployeeNumber" />
+    </div>
+
+    <div>
+        <label>Salary</label>
+        <input type="number" name="Salary" id="Salary" step="0.01" class="newinput" value="@Model.Salary" />
+    </div>
+
+    <div>
+        <label>Hire Date</label>
+        <input type="date" name="HireDate" id="HireDate" class="newinput" value="@Model.HireDate.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <button onclick="EditTeacher(@Model.TeacherId);">Update Teacher</button>
+</div>
+
+<script>
+    function EditTeacher(TeacherId) {
+        //goal: send a request which looks like this:
+        //POST : http://localhost:59727/api/TeacherData/EditTeacher/{id}
+        //with POST data of teacherfname, teacherlname, employeenumber, salary and hiredate
+
+        var URL = "http://localhost:59727/api/TeacherData/EditTeacher/" + TeacherId;
+
+        var rq = new XMLHttpRequest();
+        // where is this request sent to?
+        // is the method GET or POST?
+        // what should we do with the response?
+
+        var TeacherFName = document.getElementById('TeacherFName').value;
+        var TeacherLName = document.getElementById('TeacherLName').value;
+        var EmployeeNumber = document.getElementById('EmployeeNumber').value;
+        var Salary = document.getElementById('Salary').value;
+        var HireDate = document.getElementById('HireDate').value;
+
+        var TeacherData = {
+            "TeacherFName": TeacherFName,
+            "TeacherLName": TeacherLName,
+            "EmployeeNumber": EmployeeNumber,
+            "Salary": Salary,
+            "HireDate": HireDate
+        };
+
+        rq.open("POST", URL, true);
+        rq.setRequestHeader("Content-Type", "application/json");
+        rq.onreadystatechange = function () {
+            //ready state should be 4 AND status should be 200
+            if (rq.readyState == 4 && rq.status == 200) {
+                //request is successful and the request is finished
+                //nothing to render, the method returns nothing.
+            }
+        }
+        //POST information sent through the .send() method
+        rq.send(JSON.stringify(TeacherData));
+
+    }
+
+</script>
+<style>
+    /* Styles for the main content container */
+    .main-content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+
+    /* Styles for the navigation link */
+    .navlink a {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .navlink a:hover {
+            text-decoration: underline;
+        }
+
+    /* Styles for the form fields */
+    .main-content div {
+        margin-bottom: 15px;
+    }
+
+    /* Styles for the labels */
+    .main-content label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    /* Styles for the input fields */
+    .newinput {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+    /* Styles for the button */
+    .main-content button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        font-size: 1.1em;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+
+        .main-content button:hover {
+            background-color: #0056b3;
+        }
+
+</style>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -208,6 +209,74 @@ namespace Cumulative_Project1.Controllers
 
         }
 
+        //// <summary>
+        /// Updates an Teacher on the MySQL Database. 
+        /// </summary>
+        /// <param name="TeacherInfo">An object with fields that map to the columns of the teacher's table.</param>
+        /// <example>
+        /// POST api/TeacherData/EditTeacher/2
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	"TeacherFName":"Cathrine",
+        ///	"TeacherLName":"Cum",
+        ///	"EmployeeNumber":"T380",
+        ///	"HireDate":"2014-11-1"
+        ///	"Salary":"59.84"
+        /// }
+        /// </example>
+        //POST: api/TeacherData/EditTeacher/{TeacherId}
+        [HttpPost]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
+        [Route("api/TeacherData/EditTeacher/{id}")]
+        public void EditTeacher(int id, [FromBody] Teacher TeacherInfo)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.DatabaseAccess();
+
+            try
+            {
+                //Open the connection between the web server and database
+                Conn.Open();
+
+                //Establish a new command (query) for our database
+                MySqlCommand cmd = Conn.CreateCommand();
+
+                //SQL QUERY
+                cmd.CommandText = @"
+            UPDATE teachers 
+            SET teacherfname = @TeacherFName,
+                teacherlname = @TeacherLName,
+                employeenumber = @EmployeeNumber,
+                hiredate = @HireDate,
+                salary = @Salary 
+            WHERE teacherid = @TeacherId";
+
+                // Add parameters to avoid SQL injection
+                cmd.Parameters.AddWithValue("@TeacherFName", TeacherInfo.TeacherFName);
+                cmd.Parameters.AddWithValue("@TeacherLName", TeacherInfo.TeacherLName);
+                cmd.Parameters.AddWithValue("@EmployeeNumber", TeacherInfo.EmployeeNumber);
+                cmd.Parameters.AddWithValue("@HireDate", TeacherInfo.HireDate);
+                cmd.Parameters.AddWithValue("@Salary", TeacherInfo.Salary);
+                cmd.Parameters.AddWithValue("@TeacherId", id);
+
+                cmd.Prepare();
+
+                // Execute the command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                Debug.WriteLine($"Error: {ex.Message}");
+                // Consider rethrowing or handling the error appropriately
+            }
+            finally
+            {
+                // Ensure the connection is closed
+                Conn.Close();
+            }
+
+        }
 
     }
 }
